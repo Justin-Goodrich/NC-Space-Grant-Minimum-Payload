@@ -11,6 +11,6 @@ class Swarm_Trasmitter(Transmitter):
         pass
 
 
-def Beeline_Radio_Transmitter(Transmitter):
+class Beeline_Radio_Transmitter(Transmitter):
     def calibration():
         pass
