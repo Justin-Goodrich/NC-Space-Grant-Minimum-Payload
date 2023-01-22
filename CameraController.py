@@ -39,7 +39,8 @@ class ImageCamera(CameraController):
             # because of the limit computing power of the Raspberry Pi Zero a new thread is to start to write image to memory,
             # in order to save time and take advantage of our 15 second increment requirement
             
-            t = threading.Thread(target = cv2.imwrite, args=(file_name,image)).start()
+            t = threading.Thread(target = cv2.imwrite, args=(file_name,image))
+            t.start()
             time.sleep(increment)
             t.join()
 
