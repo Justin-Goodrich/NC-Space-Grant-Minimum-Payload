@@ -30,6 +30,7 @@ class ImageCamera(CameraController):
 
         os.makedirs(dir_path, exist_ok=True)
 
+        
         for i in range(n_photos):
             #files are to be save in a given directory, each file is to be named minimum_payload_image_(index).png            
             file_name = os.path.join(dir_path,'minimum_payload_image_{}.png'.format(i))
@@ -38,8 +39,10 @@ class ImageCamera(CameraController):
             # because of the limit computing power of the Raspberry Pi Zero a new thread is to start to write image to memory,
             # in order to save time and take advantage of our 15 second increment requirement
             
-            threading.Thread(target = cv2.imwrite, args=(file_name,image)).start()
+            t = threading.Thread(target = cv2.imwrite, args=(file_name,image)).start()
             time.sleep(increment)
+            t.join()
+
 
         
 class VideoCamera(CameraController):
