@@ -4,8 +4,6 @@ import os
 
 
 class TestCameraController:
-    camera = CameraController(0)
-
     def test_is_working(self):
         cam = CameraController(0)
         success = cam.camera.grab()
