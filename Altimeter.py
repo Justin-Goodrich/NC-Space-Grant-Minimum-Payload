@@ -14,7 +14,7 @@ SYSMOD = 0x11
 CTRL_REG1 = 0x26
 CTRL_REG2 = 0x27
 
-ACTIVE = 0x01
+MODE_ACTIVE = 0x01
 MODE_ALTIMETER_OSR_128 = 0xB8
 MODE_ALTIMETER = 128
 
@@ -35,10 +35,14 @@ class Altimeter:
 
     def configure(self,SETTING):
         self.bus.write_byte_data(MPL3115A2_ADDR,CTRL_REG1,SETTING)
+        self.config = SETTING
 
     def wipe(self):
         self.bus.write_byte_data(MPL3115A2_ADDR,CTRL_REG1,0x00)
     
+    def set_active(self):
+        self.configure(self.config|MODE_ACTIVE)
+
     def convert_altitude_data(self,data):
         return float((data[0]<<24)|(data[1]<<16)|(data[2]<<8))/ALTITUDE_DIVISOR
 
