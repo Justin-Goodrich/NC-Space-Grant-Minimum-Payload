@@ -5,6 +5,7 @@ import os
 from sensor.Altimeter import Altimeter
 
 temp_sensor = Altimeter(1)
+temp_sensor.set_active()
 collection_interval = 0.001
 collection_time = 5
 ms = 0
@@ -14,7 +15,7 @@ y = []
 
 print('3')
 time.sleep(1)
-print('3')
+print('2')
 time.sleep(1)
 print('1')
 time.sleep(1)

@@ -70,7 +70,7 @@ class Altimeter:
         if self.config & MODE_ALTIMETER != 0:
             self.config(self.config ^ MODE_ALTIMETER)
             time.sleep(2)
-        byte_data = []
+        byte_data = [0,0,0]
 
         byte_data[0] = self.bus.read_byte_data(MPL3115A2_ADDR, OUT_P_MSB)
         byte_data[1] = self.bus.read_byte_data(MPL3115A2_ADDR, OUT_P_CSB)
@@ -79,7 +79,7 @@ class Altimeter:
         return self.convert_pressure_data(byte_data)
 
     def get_temperature(self):
-        byte_data = []
+        byte_data = [0,0]
 
         byte_data[0] = self.bus.read_byte_data(MPL3115A2_ADDR, OUT_T_MSB)
         byte_data[1] = self.bus.read_byte_data(MPL3115A2_ADDR, OUT_T_LSB)
