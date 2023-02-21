@@ -53,8 +53,8 @@ json.dump(data, out_file)
 out_file.close()
 
 print('input filename for graph image:')
-prompt(graphdir)
+graph_filename = prompt(graphdir)
 
 plt.plot(x,y)
-plt.savefig()
+plt.savefig(graph_filename + '.png')
 
