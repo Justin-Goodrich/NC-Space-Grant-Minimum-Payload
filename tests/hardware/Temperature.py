@@ -56,5 +56,5 @@ print('input filename for graph image:')
 graph_filename = prompt(graphdir)
 
 plt.plot(x,y)
-plt.savefig(graph_filename + '.png')
+plt.savefig(os.path.join(graphdir,graph_filename) + '.png')
 
