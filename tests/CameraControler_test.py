@@ -1,4 +1,4 @@
-from CameraController import CameraController, ImageCamera
+from camera.CameraController import CameraController, ImageCamera
 import numpy as np 
 import os
 

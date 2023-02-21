@@ -6,7 +6,7 @@ import time
 class CameraController():
     def __init__(self, id=0):
         self.id = id
-        self.camera = cv2.VideoCapture(id)
+        self.camera = cv2.VideoCapture(id,cv2.CAP_V4L)
 
     def turn_on(self):
         if self.camera.isOpened() == False:
