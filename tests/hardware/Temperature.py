@@ -30,14 +30,30 @@ while time.time()-t < collection_time:
     time.sleep(collection_interval)
 
 
-def prompt():
-    print('collection complete, please enter filename for data saving')
+def prompt(directory):
     i = input()
-    if i in os.listdir(outputdir):
+    if i in os.listdir(directory):
         print('file exists, please enter new name')
         prompt()
     return i
 
 outputdir = 'data'
-filename = prompt()
-out_file = open(os.path.join(outputdir,filename), 'w+')
+graphdir = 'graphs'
+print('collection complete, please enter filename for data saving:\ndo not include file extension')
+filename = prompt(outputdir)
+out_file = open(os.path.join(outputdir,filename,'.json'), 'w+')
+
+data = {
+    'x':x,
+    'y':y
+}
+
+json.dump(data, out_file)
+out_file.close()
+
+print('input filename for graph image:')
+prompt(graphdir)
+
+plt.plot(x,y)
+plt.savefig()
+
