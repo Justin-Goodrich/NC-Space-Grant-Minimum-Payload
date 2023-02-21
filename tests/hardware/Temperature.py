@@ -42,7 +42,7 @@ outputdir = 'data'
 graphdir = 'graphs'
 print('collection complete, please enter filename for data saving:\ndo not include file extension')
 filename = prompt(outputdir)
-out_file = open(os.path.join(outputdir,filename,'.json'), 'w+')
+out_file = open(os.path.join(outputdir,filename + '.json'), 'w+')
 
 data = {
     'x':x,
