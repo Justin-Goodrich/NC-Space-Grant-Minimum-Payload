@@ -1,6 +1,4 @@
-import json
 import time
-import os
 from camera.CameraController import ImageCamera
 
 camera = ImageCamera(0)
