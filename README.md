@@ -1,17 +1,21 @@
 # NC-Space-Grant-Minimum-Payload
 
-#Installation
+## Installation
 
 first clone the repository
 ```console
 git clone https://github.com/Justin-Goodrich/NC-Space-Grant-Minimum-Payload.git
 ```
-for a quick and easy instalation of all dependancies, create a python virtual enviroment with the following commands
+for a quick and easy installation of all dependancies, create a python virtual enviroment with the following commands
 
-1. ``
+1. Intialize venv
+```console
 python3 -m venv ~/HAB
-``
-2. ``source ~/HAB/bin/activate ``
+```
+2. Actiate venv
+```console
+source ~/HAB/bin/activate
+```
 
 your terminal prompt should now show its enviroment name, similar to this
 
