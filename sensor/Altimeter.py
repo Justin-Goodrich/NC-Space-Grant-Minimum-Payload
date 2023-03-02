@@ -50,7 +50,13 @@ class Altimeter:
         return float((data[0]<<16)|(data[1]<<8)|(data[2]))/PRESSURE_DIVISOR
 
     def convert_temperature_data(self,data):
-        return float((data[0]<<8)|(data[1]))/TEMPERATURE_DIVISOR
+        temp = ((data[0]<<8)|data[1])
+        if data[0] >= 128:
+            temp-=1
+            temp^=65535
+            temp*=-1
+            
+        return temp/TEMPERATURE_DIVISOR
 
     def get_altitude(self):
         # checks if altitude mode is on, if off, switches back to altitude
