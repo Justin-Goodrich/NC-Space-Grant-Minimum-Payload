@@ -15,6 +15,9 @@ class CameraController():
     def capture_frame(self):
         retval, image = self.camera.read()
         return image
+    
+    def save_image(img_file,img):
+        cv2.imwrite(img_file,img)
         
 class ImageCamera(CameraController):
     def image_collection(self, increment, n_photos, dir):
