@@ -4,12 +4,16 @@ import threading
 import os
 from sensor import Accelerometer, Altimeter
 from camera.CameraController import ImageCamera
+import RPi.GPIO as GPIO
+
+#GLOBAL VARIABLES
 
 BASE_DIR = '~'
 DB = 'minimum_payload.db'
 IMAGE_BASE_FILENAME = 'min_payload_img'
 DATA_COLLECTION_INCREMENT = 15
 ALTITUDE_THRESHOLD_M = 20
+GPIO_PIN = 10
 
 ALTITUDE_RANGES = [
     {
@@ -34,12 +38,20 @@ ALTITUDE_RANGES = [
     }
 ]
 
+#gpio configuration
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+
+GPIO.setup(21, GPIO.OUT)
+
 t = time.time()
 
+#sql config 
 con = sqlite3.connect(os.path.join(BASE_DIR, DB))
 db = con.cursor()
-
 db.execute("CREATE TABLE MIN_PAYLOAD (flight_time DOUBLE PRIMARY KEY,acceleration DOUBLE NOT NULL,temperature DOUBLE NOT NULL,barometric_pressure DOUBLE NOT NULL,altitude DOUBLE NOT NULL,image_filename TEXT NOT NULL)")
+
 altimeter = Altimeter.Altimeter(1)
 accelerometer = Accelerometer.Accelerometer(1)
 camera = ImageCamera(0)
@@ -52,12 +64,14 @@ alt_0 = altimeter.get_altitude()
 
 
 def data_collection():
+
     for A in ALTITUDE_RANGES:
+            t_2 = time.time()
             img_count = 0
             photo_dir = os.path.join(BASE_DIR,A['label'])
             os.mkdir(photo_dir)
-            
-            while altimeter.get_altitude() < A['max']:
+        
+            while altimeter.get_altitude() < A['max'] | time.time()-t_2 < 10800:
                 photo_path = os.path.join(photo_dir, 'min_payload_img_{}.jpg'.format(img_count))
                 img_count+=1
                 image = camera.capture_frame()
@@ -78,14 +92,21 @@ def data_collection():
 
 def check_freefall():
     x,y,z = accelerometer.get_acceleration()
-    if (z + 1) < 0.1:
-        pass
+    t_1 = time.time()
+    while True:
+        if time.time()-t_1 == 6000:
+            GPIO.output(GPIO_PIN, GPIO.HIGH)
+            time.sleep(10)
+            GPIO.output(GPIO_PIN, GPIO.LOW)
+            GPIO.cleanup()
+            break  
         #activate individual payload
 
 # main loop
 while True:
     # checks when to start launch sequence
-    if altimeter.get_altitude() >= alt_0 + ALTITUDE_THRESHOLD_M:
+    altimeter.get_altitude()
+    if time.time()-t == 1800:
         # ecxcute thees int their own threads
 
         data_thread = threading.Thread(target=data_collection)

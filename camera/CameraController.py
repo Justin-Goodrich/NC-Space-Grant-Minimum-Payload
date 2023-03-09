@@ -53,4 +53,3 @@ class VideoCamera(CameraController):
     def __init__(self):
         pass
 
-print(os.listdir('./'))
