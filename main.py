@@ -12,6 +12,7 @@ IMAGE_BASE_FILENAME = 'min_payload_img'
 DATA_COLLECTION_INCREMENT = 15
 ALTITUDE_THRESHOLD_M = 40
 OUTPUT_PIN = 16
+PHOTO_WAIT_TIME 5*60
 
 ALTITUDE_RANGES = [
     {
@@ -58,6 +59,7 @@ def data_collection():
     db = con.cursor()
     db.execute("CREATE TABLE MIN_PAYLOAD (flight_time INT PRIMARY KEY,a_x DOUBLE NOT NULL,a_y DOUBLE NOT NULL,a_z DOUBLE NOT NULL,temperature DOUBLE NOT NULL,barometric_pressure DOUBLE NOT NULL,altitude DOUBLE NOT NULL,image_filename TEXT NOT NULL)")
     
+    time.sleep(PHOTO_WAIT_TIME)
     for A in ALTITUDE_RANGES:
             img_count = 0
             photo_dir = os.path.join(BASE_DIR,A['label'])
