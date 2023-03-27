@@ -63,7 +63,7 @@ class Altimeter:
         if not (self.config & MODE_ALTIMETER):
             self.configure(self.config | MODE_ALTIMETER)
 
-        byte_data = []
+        byte_data = [0,0,0]
 
         byte_data[0] = self.bus.read_byte_data(MPL3115A2_ADDR, OUT_P_MSB)
         byte_data[1] = self.bus.read_byte_data(MPL3115A2_ADDR, OUT_P_CSB)
@@ -74,7 +74,7 @@ class Altimeter:
     def get_barometric_pressure(self):
         # checks if altitude mode is on, if on, switches back to pressure mode
         if self.config & MODE_ALTIMETER != 0:
-            self.config(self.config ^ MODE_ALTIMETER)
+            self.configure(self.config ^ MODE_ALTIMETER)
             time.sleep(2)
         byte_data = [0,0,0]
 

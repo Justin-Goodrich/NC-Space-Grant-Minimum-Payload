@@ -48,8 +48,12 @@ class Accelerometer:
     
     def convert_acceleration_data(self,MSB,LSB):
         acceleration = ((MSB << 8)|LSB)>>2
-        if acceleration > 0x1FFF:
-            acceleration -= 0x4000
+
+        if MSB >= 128:
+            acceleration -=1
+            acceleration ^= 16383
+            acceleration*=1
+       
 
         return acceleration/self.sensitivity
 
