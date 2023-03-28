@@ -18,6 +18,11 @@ class CameraController():
     
     def save_image(img_file,img):
         cv2.imwrite(img_file,img)
+    
+    def set_size(self,width, height):
+        self.camera.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+        self.camera.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+
         
 class ImageCamera(CameraController):
     def image_collection(self, increment, n_photos, dir):

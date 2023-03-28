@@ -12,7 +12,8 @@ IMAGE_BASE_FILENAME = 'min_payload_img'
 DATA_COLLECTION_INCREMENT = 15
 ALTITUDE_THRESHOLD_M = 40
 OUTPUT_PIN = 16
-PHOTO_WAIT_TIME 5*60
+GPS_PIN = 21
+PHOTO_WAIT_TIME 2*60
 
 ALTITUDE_RANGES = [
     {
@@ -46,7 +47,7 @@ t = time.time()
 altimeter = Altimeter.Altimeter(1)
 accelerometer = Accelerometer.Accelerometer(1)
 camera = ImageCamera(0)
-
+camera.set_size(4056,3040)
 altimeter.set_active()
 accelerometer.set_active()
 accelerometer.set_range('4g')
@@ -112,5 +113,8 @@ while True:
         THIS IF STAMENT WILL NOT BE EXECUTED AGAIN AND ASCENT SEQUENCE IS OVER
         """
 
+    if altimeter.get_altitude() <= 1000:
+        out = OutputDevice(GPS_PIN)
+        out.on()
 
     
